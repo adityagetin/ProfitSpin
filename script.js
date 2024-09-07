@@ -129,6 +129,12 @@ function spin() {
             } else {
                 document.getElementById('spinButton').textContent = "Game Over";
                 document.getElementById('spinButton').disabled = true;
+                if(cashbackBalance==0 && roiBalance ==0 && subscriptionBalance ==0){
+                    resultDisplay.innerHTML= 'Better Luck Next Time !';
+                }
+                else{
+                    resultDisplay.innerHTML= 'Thanks!'
+                }
             }
         }, duration * 1000); // Match the duration in milliseconds
     }
