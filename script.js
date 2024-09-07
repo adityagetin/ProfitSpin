@@ -73,7 +73,7 @@ function spin() {
 
         // Calculate spin duration and number of spins
         const spins = getRandomInt(10, 20);
-        const duration = 10; // Duration in seconds
+        const duration = 5; // Duration in seconds
         const totalRotation = spins * 360; // Total degrees to rotate
         const iconChangeInterval = 100; // Interval to change icons in milliseconds
 
