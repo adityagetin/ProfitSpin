@@ -3,8 +3,10 @@
 
 /* General layout and other styles */
 body {
-    font-family: 'Arial', sans-serif;
-    background: radial-gradient(circle, #333, #000);
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+	height: 100vh;
     margin: 0;
     padding: 0;
     display: flex;
@@ -19,6 +21,7 @@ body {
     align-items: center;
     justify-content: center;
     background: #222;
+    opacity: 0.85;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
     padding: auto;
     width: 100%;
@@ -153,6 +156,19 @@ body {
     from { transform: rotateX(0deg); }
     to { transform: rotateX(360deg); }
 }
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
 
 @media (min-width: 768px) {
     .button-54 {
