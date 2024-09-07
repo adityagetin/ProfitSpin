@@ -5,6 +5,8 @@
     align-items: center;
     gap: 15px;
     margin-bottom: 40px;
+    margin-left: 3%;
+    margin-right: 3%;
 }
 
 .wallet {
@@ -70,13 +72,15 @@ body {
     justify-content: center;
     gap: 1px;
     margin-bottom: 20px;
+    margin-left:5%;
+    margin-right: 5%;
+    border-left: 0.1px solid #d5d5d5;
+    border-right: 0.1px solid #d5d5d5;
 }
 
 .slot {
     width: 150px;
     height: 150px;
-    border-left: 0.1px solid #d5d5d5;
-    border-right: 0.1px solid #d5d5d5;
     position: relative;
     overflow: hidden;
     background-color: #222;
