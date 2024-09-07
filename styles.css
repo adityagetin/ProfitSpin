@@ -52,7 +52,6 @@ body {
     gap: 5px;
     background: #333;
     padding: 10px;
-    padding-right: 2vw;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
     width: 30%;  /* Adjust the width to fit the wallet in a row */
