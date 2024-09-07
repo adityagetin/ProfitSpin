@@ -56,9 +56,9 @@ function getJackpotResult(value) {
 
 // Function to update the wallet displays
 function updateWallets() {
-    document.getElementById('cashbackAmount').textContent = `Rs ${cashbackBalance}`;
-    document.getElementById('roiAmount').textContent = `${roiBalance.toFixed(2)}%`;
-    document.getElementById('subscriptionAmount').textContent = `Rs ${subscriptionBalance}`;
+    document.getElementById('cashbackAmount').textContent = `${cashbackBalance}/-`;
+    document.getElementById('roiAmount').textContent = `${roiBalance.toFixed(2)}`;
+    document.getElementById('subscriptionAmount').textContent = `${subscriptionBalance}/-`;
 }
 
 // Main function to handle the spinning action
@@ -130,6 +130,7 @@ function spin() {
                 document.getElementById('spinButton').textContent = "Game Over";
                 document.getElementById('spinButton').disabled = true;
                 if(cashbackBalance==0 && roiBalance ==0 && subscriptionBalance ==0){
+                    setTimeout(5000)
                     resultDisplay.innerHTML= 'Better Luck Next Time !';
                 }
                 else{
