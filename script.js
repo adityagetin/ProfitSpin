@@ -1,25 +1,34 @@
+// Define slot values for different rewards
 const slotValues = [
     '01.png', // Cashback
     '02.png', // ROI Discount
     '03.png'  // Subscription Discount
 ];
 
+// Maximum number of spins allowed
 let spinCount = 0;
 const maxSpins = 3;
 
-// Wallet balances
+// Wallet balances for different types of rewards
 let cashbackBalance = 0;
 let roiBalance = 0;
 let subscriptionBalance = 0;
 
+// Preload and set up the spin sound
+const spinSound = new Audio('Sound1.mp3');
+spinSound.loop = true; // Set sound to loop
+
+// Utility function to get a random integer between min and max (inclusive)
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// Utility function to get a random slot value
 function getRandomSlotValue() {
     return slotValues[Math.floor(Math.random() * slotValues.length)];
 }
 
+// Function to get jackpot result and update wallet balances
 function getJackpotResult(value) {
     switch (value) {
         case '01.png':
@@ -45,36 +54,38 @@ function getJackpotResult(value) {
     }
 }
 
+// Function to update the wallet displays
 function updateWallets() {
-    document.getElementById('cashbackAmount').textContent = cashbackBalance;
-    document.getElementById('roiAmount').textContent = roiBalance.toFixed(2);
-    document.getElementById('subscriptionAmount').textContent = subscriptionBalance;
+    document.getElementById('cashbackAmount').textContent = `Rs ${cashbackBalance}`;
+    document.getElementById('roiAmount').textContent = `${roiBalance.toFixed(2)}%`;
+    document.getElementById('subscriptionAmount').textContent = `Rs ${subscriptionBalance}`;
 }
 
+// Main function to handle the spinning action
 function spin() {
     if (spinCount < maxSpins) {
         spinCount++;
         const slots = document.querySelectorAll('.slot-content');
         const resultDisplay = document.getElementById('result');
         
+        // Play sound when spin starts
+        spinSound.play();
+
         // Calculate spin duration and number of spins
         const spins = getRandomInt(10, 20);
-        const duration = 20; // Duration in seconds
+        const duration = 10; // Duration in seconds
         const totalRotation = spins * 360; // Total degrees to rotate
         const iconChangeInterval = 100; // Interval to change icons in milliseconds
-
-        let rotation = 0;
-        let endRotation = totalRotation;
 
         // Set initial icons
         slots.forEach(slot => {
             slot.innerHTML = `<img src="${getRandomSlotValue()}" alt="Reward"/>`;
         });
 
-        // Start spinning
+        // Start spinning animation
         slots.forEach(slot => {
             slot.style.transition = `transform ${duration}s cubic-bezier(0.17, 0.67, 0.83, 0.67)`;
-            slot.style.transform = `rotateY(${endRotation}deg)`;
+            slot.style.transform = `rotateX(${totalRotation}deg)`;
         });
 
         // Change icons during spinning
@@ -94,6 +105,10 @@ function spin() {
                 slot.innerHTML = `<img src="${value}" alt="Reward"/>`;
                 results.push(value);
             });
+
+            // Stop the sound when result is declared
+            spinSound.pause();
+            spinSound.currentTime = 0; // Reset sound playback
 
             // Determine the result
             if (new Set(results).size === 1) {
@@ -115,6 +130,6 @@ function spin() {
                 document.getElementById('spinButton').textContent = "Game Over";
                 document.getElementById('spinButton').disabled = true;
             }
-        }, duration * 100); // Match the duration in milliseconds
+        }, duration * 1000); // Match the duration in milliseconds
     }
 }
