@@ -1,15 +1,8 @@
-// Define slot values for different rewards with adjusted probabilities
+// Define slot values for different rewards
 const slotValues = [
     '01.png', // Cashback
     '02.png', // ROI Discount
     '03.png'  // Subscription Discount
-];
-
-// Set probabilities for each slot value
-const slotProbabilities = [
-    { value: '01.png', probability: 0.1 }, // Higher chance for Cashback
-    { value: '02.png', probability: 0.4 }, // Moderate chance for ROI Discount
-    { value: '03.png', probability: 0.3 }  // Lower chance for Subscription Discount
 ];
 
 // Maximum number of spins allowed
@@ -30,17 +23,9 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Utility function to get a weighted random slot value based on probabilities
+// Utility function to get a random slot value
 function getRandomSlotValue() {
-    const rand = Math.random();
-    let cumulativeProbability = 0;
-    for (const slot of slotProbabilities) {
-        cumulativeProbability += slot.probability;
-        if (rand < cumulativeProbability) {
-            return slot.value;
-        }
-    }
-    return slotValues[0]; // Default fallback
+    return slotValues[Math.floor(Math.random() * slotValues.length)];
 }
 
 // Function to get jackpot result and update wallet balances
@@ -85,22 +70,18 @@ function spin() {
         // Play sound when spin starts
         spinSound.play();
         // Calculate spin duration and number of spins
-        const spins = getRandomInt(15, 25); // Increased range for more spins
+        const spins = getRandomInt(10, 20);
         const duration = 5; // Duration in seconds
         const totalRotation = spins * 360; // Total degrees to rotate
         const iconChangeInterval = 100; // Interval to change icons in milliseconds
-
         // Set initial icons
         slots.forEach(slot => {
             slot.innerHTML = `<img src="${getRandomSlotValue()}" alt="Reward"/>`;
         });
-
-        // Start rolling animation
-        slots.forEach((slot, index) => {
-            // Calculate delay for each slot to create a rolling effect
-            const delay = index * 0.5; // Increase the delay for each subsequent slot
-            slot.style.transition = `transform ${duration + delay}s cubic-bezier(0.17, 0.67, 0.83, 0.67)`;
-            slot.style.transform = `rotateX(${totalRotation + 720}deg)`; // Extra rotation for effect
+        // Start spinning animation
+        slots.forEach(slot => {
+            slot.style.transition = `transform ${duration}s cubic-bezier(0.17, 0.67, 0.83, 0.67)`;
+            slot.style.transform = `rotateX(${totalRotation}deg)`;
         });
 
         // Change icons during spinning
@@ -144,14 +125,13 @@ function spin() {
             } else {
                 document.getElementById('spinButton').textContent = "Game Over";
                 document.getElementById('spinButton').disabled = true;
-                if (cashbackBalance === 0 && roiBalance === 0 && subscriptionBalance === 0) {
-                    setTimeout(() => {
-                        resultDisplay.innerHTML = 'Better Luck Next Time!';
-                    }, 5000);
-                } else {
-                    resultDisplay.innerHTML = 'Thanks!';
+                if(cashbackBalance==0 && roiBalance ==0 && subscriptionBalance ==0){
+                    resultDisplay.innerHTML= 'Better Luck Next Time !';
+                }
+                else{
+                    resultDisplay.innerHTML= `Congratulations! You Win <br> ${getJackpotResult(results[0])}!`;
                 }
             }
-        }, (duration + 2) * 1000); // Match the duration in milliseconds, adding extra for the rolling effect
+        }, duration * 1000); // Match the duration in milliseconds
     }
 }
